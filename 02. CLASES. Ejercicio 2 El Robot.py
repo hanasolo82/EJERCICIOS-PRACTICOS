@@ -61,39 +61,54 @@ class Robot:
     def __init__(self):
         self.posicion_x = 0
         self.posicion_y = 0
+        self.ordenes_realizadas = []
 
     def mueve(self, orden):
-        if orden == "A":
-            self.posicion_y += 1
-        elif orden == "R":
-            self.posicion_y -= 1
-        elif orden == "I":
-            self.posicion_x -= 1
-        elif orden == "D":
-            self.posicion_x += 1
-        elif orden != "fin":
-            print(f"Instrucción no válida: {orden}")
-
+       
+       if orden.lower() != "fin":
+            if len(orden) > 1:
+                for suborden in orden:
+                    self.mueve(suborden)
+            if orden == "A":
+               self.posicion_y += 1
+            elif orden == "R":
+               self.posicion_y -= 1
+            elif orden == "I":
+               self.posicion_x -= 1
+            elif orden == "D":
+               self.posicion_x += 1
+            elif orden.lower() != "fin":
+               print(f"Instrucción no válida: {orden}")
+            self.ordenes_realizadas.append(orden)
+            print(f"Posición actual: {self.posicion_actual()}")
     def posicion_actual(self):
         return self.posicion_x, self.posicion_y
     
-    def decoder()
-    """mueve("AADDADIR")
-También deberá tener otros dos métodos: uno que devuelva todas las órdenes recibidas y otro capaz de listar los movimientos necesario
-para volver a la posición inicial (0,0)."""
+    def decoder(self, orden):
+      lista_de_ordenes = orden.split()
+      return lista_de_ordenes
+    
+    def get_ordenes_realizadas(self):
+       return self.ordenes_realizadas
+    
+    def reset(self):
+        if "fin" in self.ordenes_realizadas:
+          self.posicion_x = 0
+          self.posicion_y = 0
+          self.ordenes_realizadas= []
+      
 
-   
 
 # Puedes utilizar el siguiente código para probar la clase creada:
 
 miRobot = Robot()
-orden = "A"
-while orden != 'fin':
-    orden = input("Introduce la orden: ")
+orden = " "
+while orden.lower() != 'fin':
+    orden = input("Introduce la orden:  ")
     miRobot.mueve(orden)
     print(miRobot.posicion_actual())
-
-
+miRobot.reset()
+print(miRobot.get_ordenes_realizadas())
 
 #Ejemplo:
 """
